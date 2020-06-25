@@ -29,18 +29,23 @@ def inter_chunk_parser(filepath, pickle=False):	# filepath: ssh interchunk .dat 
 	with open(filepath, 'r') as text:
 		for line in text:
 
-			line = re.sub("'>","",line)
+			line = re.sub("'|>","",line)
 
 			#--------------------------------------------------------------------
 			if(line.startswith("<Sentence id=")):	# sentence block begins
 				sent_flag = True	
-				sent_id = len(data)
-				sent_obj = {"type":"sentence", "chunk_list":[]}
+				sent_id = int(re.sub("<Sentence id=","",line.rstrip('\n')))
+				sent_obj = {"id":sent_id, "type":"sentence", "chunk_list":[]}
+				continue
 
 			#--------------------------------------------------------------------
 			elif(line.startswith('</Sentence')):	# sentence block ends
 				sent_flag = False	
+				if(chunk_obj != {}):
+						sent_obj["chunk_list"].append(chunk_obj)
+						chunk_obj = {}
 				data.append(sent_obj)
+				continue
 
 			#--------------------------------------------------------------------
 			elif(sent_flag):	# inside sentence block
@@ -50,9 +55,11 @@ def inter_chunk_parser(filepath, pickle=False):	# filepath: ssh interchunk .dat 
 				if(re.match('^[0-9]+$', line[0])):	# chunk block begins
 					if(chunk_obj != {}):
 						sent_obj["chunk_list"].append(chunk_obj)
+						chunk_obj = {}
 					# print(chunk_obj)
 					chunk_obj = set_attr("chunk", line)
 					chunk_obj["word_list"] = []
+					continue
 
 				#............................
 				elif(re.match('^[0-9]+.[0-9]+$', line[0])):	# intra chunk word 
@@ -61,7 +68,8 @@ def inter_chunk_parser(filepath, pickle=False):	# filepath: ssh interchunk .dat 
 					word_obj["drel"] = None
 					if(word_obj != {}):
 						chunk_obj["word_list"].append(word_obj)
-					# print(word_obj)
+						word_obj = {}
+					continue
 
 			#--------------------------------------------------------------------
 
@@ -77,7 +85,12 @@ def inter_chunk_parser(filepath, pickle=False):	# filepath: ssh interchunk .dat 
 			file.close()
 	return data 
 
+data = inter_chunk_parser("sample_inter_chunk.dat", pickle=False)
 
-
-
-data = inter_chunk_parser("sample_inter_chunk.dat", pickle=True)
+#Test
+# for sent in data:
+# 	print(sent["id"], end=" ")
+# 	for chunk in sent["chunk_list"]:
+# 		for word in chunk["word_list"]:
+# 			print(word["text"], end=" ")
+# 	print('\n')
