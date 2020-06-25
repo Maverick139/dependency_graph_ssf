@@ -68,14 +68,16 @@ def inter_chunk_parser(filepath, pickle=False):	# filepath: ssh interchunk .dat 
 		if(sent_id==-1):
 			print(">> ERROR: No sentences detected")
 		else:
-			print(">> "+str(sent_id+1)+" sentences analyzed")
+			print(">> PARSER: "+str(sent_id+1)+" sentence(s) analyzed")
 
 		if(pickle):
-
-
+			file = open("parser_data.pkl", "wb")
+			pkl.dump(data,file)
+			print(">> PICKLE: parser data saved as pickle file")
+			file.close()
 	return data 
 
 
 
 
-data = inter_chunk_parser("sample_inter_chunk.dat")
+data = inter_chunk_parser("sample_inter_chunk.dat", pickle=True)
