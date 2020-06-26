@@ -83,7 +83,7 @@
 8.1	प्राचीन	JJ	<fs af='प्राचीन,adj,any,any,,o,,' name='प्राचीन' posn='170'>
 8.2	,	SYM	<fs af='COMMA,punc,,,,,,' name=',' posn='180'>
 	))
-9	((	NULL__CCP	<fs name='NULL__CCP' dmrel='nmod:NP8' troot='और'>
+9	((	NULL__CCP	<fs name='NULL__CCP' drel='nmod:NP8' troot='और'>
 9.1	NULL	NULL	<fs name='NULL'>
 	))
 10	((	JJP	<fs name='JJP2' drel='ccof:NULL__CCP'>
@@ -633,7 +633,7 @@
 10.3	मिट्टी	NN	<fs af='मिट्टी,n,f,sg,3,o,0,0' name='मिट्टी' posn='240'>
 10.4	की	PSP	<fs af='का,psp,f,sg,,d,,' name='की2' posn='250'>
 	))
-11	((	NULL__NP	<fs mtype='gap' troot='मूर्ति' dmrel='k1s:VGF2' name='NULL__NP'>
+11	((	NULL__NP	<fs mtype='gap' troot='मूर्ति' drel='k1s:VGF2' name='NULL__NP'>
 11.1	NULL	NN	<fs af=',n,,,,,,' name='NULL'>
 	))
 12	((	VGF	<fs voicetype='active' drel='nmod__relc:NP5' stype='declarative' name='VGF2'>

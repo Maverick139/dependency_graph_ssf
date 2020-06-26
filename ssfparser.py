@@ -13,11 +13,12 @@ def set_attr(obj_type, line):
 			obj["drel"] = {"head":drel.split(":")[1], "reln":drel.split(":")[0]}
 	return obj
 
-def inter_chunk_parser(filepath, pickle=False):	# filepath: ssh interchunk .dat file 
-												# pickle = True if final data needs to be saved
+def inter_chunk_parser(filepath, save=False):	# filepath: ssh interchunk .dat file 
+												# save = True if final data needs to be pickled
 	
 	data = []	# data: list of sent_dicts (sent_list)
 	sent_flag = False	#indicates 'True' when file cursor inside a sentence block
+	sent_count = 0	#no. of sentences analyzed in the doc
 
 #--------------------------------------------------------------------
 	sent_id = -1	# sentence id [0-n]
@@ -45,6 +46,7 @@ def inter_chunk_parser(filepath, pickle=False):	# filepath: ssh interchunk .dat 
 						sent_obj["chunk_list"].append(chunk_obj)
 						chunk_obj = {}
 				data.append(sent_obj)
+				sent_count += 1
 				continue
 
 			#--------------------------------------------------------------------
@@ -76,16 +78,16 @@ def inter_chunk_parser(filepath, pickle=False):	# filepath: ssh interchunk .dat 
 		if(sent_id==-1):
 			print(">> ERROR: No sentences detected")
 		else:
-			print(">> PARSER: "+str(sent_id+1)+" sentence(s) analyzed")
+			print(">> PARSER: "+str(sent_count)+" sentence(s) analyzed")
 
-		if(pickle):
+		if(save):
 			file = open("parser_data.pkl", "wb")
 			pkl.dump(data,file)
 			print(">> PICKLE: parser data saved as pickle file")
 			file.close()
 	return data 
 
-data = inter_chunk_parser("sample_inter_chunk.dat", pickle=False)
+# data = inter_chunk_parser("sample_inter_chunk.dat", pickle=False)
 
 #Test
 # for sent in data:

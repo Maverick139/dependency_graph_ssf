@@ -1,0 +1,17 @@
+digraph {
+	NP [label="मूर्ति (NP)"]
+	NP2 [label="भगवान बुद्ध के (NP)"]
+	NP3 [label="बोधि (NP)"]
+	JJP [label="प्राप्‍त (JJP)"]
+	VGNN [label="करने से पूर्व की (VGNN)"]
+	NP4 [label="ध्‍यान मुद्रा में (NP)"]
+	VGF [label="है (VGF)"]
+	BLK [label="। (BLK)"]
+	VGF -> NP [label="k1"]
+	NP3 -> NP2 [label="r6"]
+	VGNN -> NP3 [label="k2"]
+	VGNN -> JJP [label="pof"]
+	NP4 -> VGNN [label="r6"]
+	VGF -> NP4 [label="k7"]
+	VGF -> BLK [label="rsym"]
+}
